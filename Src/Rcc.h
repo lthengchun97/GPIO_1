@@ -57,6 +57,7 @@ void enableGpioA(void);
 void enableGpioB(void);
 void enableGpioG(void);
 void enableRng(void);
+void enableTimer8(void);
 
 #define	MCO_LSE_SRC		1
 #define	MCO_HSE_SRC		2

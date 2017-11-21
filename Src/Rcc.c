@@ -35,3 +35,9 @@ void enableRng(void){
 	Rcc->AHB2RSTR &= ~(1<<6);
 	Rcc->AHB2ENR |= (1<<6);
 }
+
+void enableTimer8(void){
+
+	Rcc->APB2RSTR &= ~(1<<1);
+	Rcc->APB2ENR |= (1 <<1) ;
+}

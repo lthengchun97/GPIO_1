@@ -25,7 +25,8 @@ Src/main.o: ../Src/main.c C:/Student/ThengChun/STM32/RNG_2/Inc/main.h \
  C:/Student/ThengChun/STM32/RNG_2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h \
  C:/Student/ThengChun/STM32/RNG_2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  ../Src/Gpio.h ../Src/Rcc.h ../Src/Nvic.h ../Src/Rng.h ../Src/SysTk.h \
- ../Src/extiReg.h
+ ../Src/extiReg.h C:/Student/ThengChun/STM32/RNG_2/Inc/Timer.h \
+ C:/Student/ThengChun/STM32/RNG_2/Inc/DbgMcu.h
 
 C:/Student/ThengChun/STM32/RNG_2/Inc/main.h:
 
@@ -90,3 +91,7 @@ C:/Student/ThengChun/STM32/RNG_2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_
 ../Src/SysTk.h:
 
 ../Src/extiReg.h:
+
+C:/Student/ThengChun/STM32/RNG_2/Inc/Timer.h:
+
+C:/Student/ThengChun/STM32/RNG_2/Inc/DbgMcu.h:

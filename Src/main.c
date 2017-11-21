@@ -45,6 +45,8 @@
 #include "Rng.h"
 #include "SysTk.h"
 #include "extiReg.h"
+#include "Timer.h"
+#include "DbgMcu.h"
 
 /* USER CODE BEGIN Includes */
 #define greenLedPin		13
@@ -123,7 +125,8 @@ int main(void)
   gpioConfigAltFunction(GpioA,8,AF8);
   rccSelectMcolSrc(MCO_HSE_SRC);
   rccSetMcolPrescaler(MCO_DIV_BY_4);
-
+  initTimer8();
+  haltTimer8WhenDebugging();
   // sysTickIntrDisable();
   //sysTickIntrEnable();
   //sysTickSetReload(11250000);
@@ -146,23 +149,23 @@ int main(void)
   while (1)
   {
 	  volatile int blueButtonState;
-	  gpioWrite(GpioG,redLedPin,1);
-	  __WFI();
+	  //gpioWrite(GpioG,redLedPin,1);
+	  //__WFI();
 
-	  gpioWrite(GpioG,redLedPin,0);
-	  __WFI();
+	  //gpioWrite(GpioG,redLedPin,0);
+	 // __WFI();
 
 	  //while (!sysTickHasExpired());
-	  gpioWrite(GpioG,redLedPin,1);
+	  //gpioWrite(GpioG,redLedPin,1);
 	//  while (!sysTickHasExpired());
 
 
-	  /*
+	  Timer8Delay();
 	  gpioWrite(GpioG,redLedPin,1);
-	  HAL_Delay(200);
+	  Timer8Delay();
 	  gpioWrite(GpioG,redLedPin,0);
- 	  HAL_Delay(200);
-/*
+	  Timer8Delay();
+ 	  /*
 	  blueButtonState = gpioRead(GpioA,blueButtonPin);
 	  if(blueButtonState == 1){
 		  gpioWrite(GpioG,greenLedPin,1);
