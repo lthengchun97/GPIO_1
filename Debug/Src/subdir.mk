@@ -4,30 +4,36 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Src/Flash.c \
 ../Src/Gpio.c \
 ../Src/Rcc.c \
 ../Src/Rng.c \
 ../Src/Timer.c \
+../Src/i2c.c \
 ../Src/main.c \
 ../Src/stm32f4xx_hal_msp.c \
 ../Src/stm32f4xx_it.c \
 ../Src/system_stm32f4xx.c 
 
 OBJS += \
+./Src/Flash.o \
 ./Src/Gpio.o \
 ./Src/Rcc.o \
 ./Src/Rng.o \
 ./Src/Timer.o \
+./Src/i2c.o \
 ./Src/main.o \
 ./Src/stm32f4xx_hal_msp.o \
 ./Src/stm32f4xx_it.o \
 ./Src/system_stm32f4xx.o 
 
 C_DEPS += \
+./Src/Flash.d \
 ./Src/Gpio.d \
 ./Src/Rcc.d \
 ./Src/Rng.d \
 ./Src/Timer.d \
+./Src/i2c.d \
 ./Src/main.d \
 ./Src/stm32f4xx_hal_msp.d \
 ./Src/stm32f4xx_it.d \

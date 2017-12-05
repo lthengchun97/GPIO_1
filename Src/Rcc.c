@@ -41,3 +41,16 @@ void enableTimer8(void){
 	Rcc->APB2RSTR &= ~(1<<1);
 	Rcc->APB2ENR |= (1 <<1) ;
 }
+
+void enableI2C1(void){
+
+	//Unreset i2c1
+	Rcc->APB1RSTR &= ~(1<21);
+	Rcc->APB1ENR |= (1<<21);
+}
+
+void enableI2C2(void){
+	//Unreset i2c2
+	Rcc->APB1RSTR &= ~(1<22);
+	Rcc->APB1ENR |= (1<<22);
+}

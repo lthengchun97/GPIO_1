@@ -1,3 +1,3 @@
-Src/Rcc.o: ../Src/Rcc.c ../Src/Rcc.h
+Src/Rcc.o: ../Src/Rcc.c C:/Student/ThengChun/STM32/RNG_2/Inc/Rcc.h
 
-../Src/Rcc.h:
+C:/Student/ThengChun/STM32/RNG_2/Inc/Rcc.h:

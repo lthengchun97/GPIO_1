@@ -58,6 +58,8 @@ void enableGpioB(void);
 void enableGpioG(void);
 void enableRng(void);
 void enableTimer8(void);
+void enableI2C2(void);
+void enableI2C1(void);
 
 #define	MCO_LSE_SRC		1
 #define	MCO_HSE_SRC		2

@@ -47,6 +47,10 @@
 #include "extiReg.h"
 #include "Timer.h"
 #include "DbgMcu.h"
+#include "i2c.h"
+#include "Flash.h"
+#include "string.h"
+
 
 /* USER CODE BEGIN Includes */
 #define greenLedPin		13
@@ -103,46 +107,61 @@ int main(void)
   MX_GPIO_Init();
 
   /* USER CODE BEGIN 2 */
-  printf("Hello, world!\n");
+  //printf("Hello, world!\n");
 
   //Enable I2C1 Event interrupt
-  nvicEnableIrq(31);
-  nvicSetPriority(31,8);
+  //nvicEnableIrq(31);
+  //nvicSetPriority(31,8);
   //Disable I2C1 Event interrupt
-  nvicDisableIrq(31);
+  //nvicDisableIrq(31);
 
-  enableRng();
+  //enableRng();
   //Enable RNG and HASH interrupt
-  nvicEnableIrq(80);
-  nvicSetPriority(80,4);
+  //nvicEnableIrq(80);
+  //nvicSetPriority(80,4);
   //getRandomNumberByInterrupt();
-  enableGpioA();
-  enableGpioG();
-  gpioConfig(GpioA,blueButtonPin, GPIO_MODE_IN, 0, GPIO_NO_PULL, 0);
-  gpioConfig(GpioG,redLedPin, GPIO_MODE_OUT, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_HI_SPEED);
-  gpioConfig(GpioG,greenLedPin, GPIO_MODE_OUT, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_HI_SPEED);
-  gpioConfig(GpioA,8, GPIO_MODE_AF, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_VHI_SPEED);
-  gpioConfigAltFunction(GpioA,8,AF8);
-  rccSelectMcolSrc(MCO_HSE_SRC);
-  rccSetMcolPrescaler(MCO_DIV_BY_4);
-  initTimer8();
-  haltTimer8WhenDebugging();
+  //enableGpioA();
+  //enableGpioG();
+  //gpioConfig(GpioA,blueButtonPin, GPIO_MODE_IN, 0, GPIO_NO_PULL, 0);
+  //gpioConfig(GpioG,redLedPin, GPIO_MODE_OUT, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_HI_SPEED);
+  //gpioConfig(GpioG,greenLedPin, GPIO_MODE_OUT, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_HI_SPEED);
+  //gpioConfig(GpioA,8, GPIO_MODE_AF, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_VHI_SPEED);
+  //gpioConfigAltFunction(GpioA,8,AF8);
+  //rccSelectMcolSrc(MCO_HSE_SRC);
+  //rccSetMcolPrescaler(MCO_DIV_BY_4);
+  //initTimer8();
+  //haltTimer8WhenDebugging();
+  //TestI2C();
+  flashEnableProgramming(FLASH_BYTE_SIZE);
+  writeMessage("hello world!",0x08100000);
+
+  if(flashEraseSection(12) == 1){
+	  //flashEnableProgramming(FLASH_BYTE_SIZE);
+	  //writeMessage("Hello world!",0x08080000);
+	  flashDisable();
+	  while (1);
+  }	else{
+	  while	(1);
+  }
+
+
+
   // sysTickIntrDisable();
   //sysTickIntrEnable();
   //sysTickSetReload(11250000);
   //sysTickPrescaleSpeed();
-  sysTickDisable();
+  //sysTickDisable();
 
 
 
   // configure EXTI register
 
   /* USER CODE END 2 */
-  nvicEnableIrq(6);
-  nvicSetPriority(6,9);
-  exTiIMREnable(blueButtonPin);
-  exTiRTSREnable(blueButtonPin);
-  exTiFTSRDisable(blueButtonPin);
+  //nvicEnableIrq(6);
+  //nvicSetPriority(6,9);
+  //exTiIMREnable(blueButtonPin);
+  //exTiRTSREnable(blueButtonPin);
+  //exTiFTSRDisable(blueButtonPin);
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -160,11 +179,11 @@ int main(void)
 	//  while (!sysTickHasExpired());
 
 
-	  Timer8Delay();
-	  gpioWrite(GpioG,redLedPin,1);
-	  Timer8Delay();
-	  gpioWrite(GpioG,redLedPin,0);
-	  Timer8Delay();
+	  //Timer8Delay();
+	  //gpioWrite(GpioG,redLedPin,1);
+	  //Timer8Delay();
+	  //gpioWrite(GpioG,redLedPin,0);
+	  //Timer8Delay();
  	  /*
 	  blueButtonState = gpioRead(GpioA,blueButtonPin);
 	  if(blueButtonState == 1){
@@ -177,7 +196,7 @@ int main(void)
 		  HAL_Delay(200);
 		  */
 
-
+	  HAL_Delay(200);
 
 	  /*
 	  SET_PIN(GpioG,redLedPin);
