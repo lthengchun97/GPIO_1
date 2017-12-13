@@ -9,6 +9,7 @@ C_SRCS += \
 ../Src/Rcc.c \
 ../Src/Rng.c \
 ../Src/Timer.c \
+../Src/Usart.c \
 ../Src/i2c.c \
 ../Src/main.c \
 ../Src/stm32f4xx_hal_msp.c \
@@ -21,6 +22,7 @@ OBJS += \
 ./Src/Rcc.o \
 ./Src/Rng.o \
 ./Src/Timer.o \
+./Src/Usart.o \
 ./Src/i2c.o \
 ./Src/main.o \
 ./Src/stm32f4xx_hal_msp.o \
@@ -33,6 +35,7 @@ C_DEPS += \
 ./Src/Rcc.d \
 ./Src/Rng.d \
 ./Src/Timer.d \
+./Src/Usart.d \
 ./Src/i2c.d \
 ./Src/main.d \
 ./Src/stm32f4xx_hal_msp.d \

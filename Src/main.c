@@ -37,20 +37,18 @@
   */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "stm32f4xx_hal.h"
 #include "Gpio.h"
-#include "Rcc.h"
-#include <stdio.h>
-#include "Nvic.h"
 #include "Rng.h"
-#include "SysTk.h"
-#include "extiReg.h"
-#include "Timer.h"
-#include "DbgMcu.h"
+#include "Rcc.h"
+#include "Nvic.h"
 #include "i2c.h"
 #include "Flash.h"
-#include "string.h"
-
+#include "Timer.h"
+#include "Usart.h"
+#include <stdio.h>
+#include "DbgMcu.h"
+#include "extiReg.h"
+#include "stm32f4xx_hal.h"
 
 /* USER CODE BEGIN Includes */
 #define greenLedPin		13
@@ -68,7 +66,6 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-
 
 /* USER CODE BEGIN PFP */
 extern void initialise_monitor_handles(void);
@@ -120,7 +117,7 @@ int main(void)
   //nvicEnableIrq(80);
   //nvicSetPriority(80,4);
   //getRandomNumberByInterrupt();
-  //enableGpioA();
+  enableGpioA();
   //enableGpioG();
   //gpioConfig(GpioA,blueButtonPin, GPIO_MODE_IN, 0, GPIO_NO_PULL, 0);
   //gpioConfig(GpioG,redLedPin, GPIO_MODE_OUT, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_HI_SPEED);
@@ -132,17 +129,31 @@ int main(void)
   //initTimer8();
   //haltTimer8WhenDebugging();
   //TestI2C();
-  flashEnableProgramming(FLASH_BYTE_SIZE);
-  writeMessage("hello world!",0x08100000);
 
-  if(flashEraseSection(12) == 1){
+  gpioConfig(GpioA,9, GPIO_MODE_AF, GPIO_PUSH_PULL, GPIO_PULL_UP, GPIO_VHI_SPEED);
+  gpioConfigAltFunction(GpioA,9,AF7);
+  gpioConfig(GpioA,10, GPIO_MODE_AF, GPIO_PUSH_PULL, GPIO_PULL_UP, GPIO_VHI_SPEED);
+  gpioConfigAltFunction(GpioA,10,AF7);
+
+  enableUART1();
+  initUsart();
+  initUsartTransmitter();
+  initUsartReceiver();
+
+
+
+
+  //flashEnableProgramming(FLASH_BYTE_SIZE);
+  //writeMessage("hello world!",0x08100000);
+
+  //if(flashEraseSection(12) == 1){
 	  //flashEnableProgramming(FLASH_BYTE_SIZE);
 	  //writeMessage("Hello world!",0x08080000);
-	  flashDisable();
-	  while (1);
-  }	else{
-	  while	(1);
-  }
+	//  flashDisable();
+	 // while (1);
+  //}	else{
+//	  while	(1);
+  //}
 
 
 
@@ -157,17 +168,26 @@ int main(void)
   // configure EXTI register
 
   /* USER CODE END 2 */
-  //nvicEnableIrq(6);
-  //nvicSetPriority(6,9);
-  //exTiIMREnable(blueButtonPin);
-  //exTiRTSREnable(blueButtonPin);
-  //exTiFTSRDisable(blueButtonPin);
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  volatile int blueButtonState;
+	  USARTSendCharDataOut("H");
+	  USARTSendCharDataOut("E");
+	  USARTSendCharDataOut("L");
+	  USARTSendCharDataOut("L");
+	  USARTSendCharDataOut("O");
+	  USARTSendCharDataOut("!");
+	  USARTSendCharDataOut("W");
+	  USARTSendCharDataOut("o");
+	  USARTSendCharDataOut("R");
+	  USARTSendCharDataOut("L");
+	  USARTSendCharDataOut("d");
+	  USARTSendCharDataOut("\n");
+	  HAL_Delay(1000);
+
+	  //volatile int blueButtonState;
 	  //gpioWrite(GpioG,redLedPin,1);
 	  //__WFI();
 
@@ -196,7 +216,7 @@ int main(void)
 		  HAL_Delay(200);
 		  */
 
-	  HAL_Delay(200);
+	  //HAL_Delay(200);
 
 	  /*
 	  SET_PIN(GpioG,redLedPin);
@@ -219,6 +239,7 @@ int main(void)
   /* USER CODE END 3 */
 
 
+
 /** System Clock Configuration
 */
 void SystemClock_Config(void)
@@ -235,12 +256,13 @@ void SystemClock_Config(void)
 
     /**Initializes the CPU, AHB and APB busses clocks 
     */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
-  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.HSICalibrationValue = 16;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = 8;
-  RCC_OscInitStruct.PLL.PLLN = 360;
+  RCC_OscInitStruct.PLL.PLLN = 180;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 4;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
@@ -262,7 +284,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV4;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
   {
@@ -296,8 +318,6 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
 }
-
-
 
 /* USER CODE BEGIN 4 */
 void my_SysTick_Handler(void){

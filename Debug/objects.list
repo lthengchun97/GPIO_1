@@ -17,6 +17,7 @@
 "Src/Rcc.o"
 "Src/Rng.o"
 "Src/Timer.o"
+"Src/Usart.o"
 "Src/i2c.o"
 "Src/main.o"
 "Src/stm32f4xx_hal_msp.o"

@@ -49,13 +49,13 @@ void LOCK_PIN(GpioReg *gpio ,int pinNum){
 }
 
 void gpioConfigAltFunction(GpioReg *gpio,int pinNum,int alt_function){
-if(pinNum<7){
-	gpio->altFuncHi &= ~(0xf<<(pinNum*4));
-	gpio->altFuncHi |= alt_function << (pinNum*4);
+if(pinNum<8){
+	//gpio->altFuncLow &= ~(0xf<<(pinNum*4));
+	gpio->altFuncLow |= alt_function << (pinNum*4);
 	}
 else
 {
-	gpio->altFuncLow &= ~(0xf<<(pinNum*4));
-	gpio->altFuncLow |= alt_function << (pinNum*4);
+	//gpio->altFuncHi &= ~(0xf<<((pinNum-8)*4));
+	gpio->altFuncHi |= alt_function << ((pinNum-8)*4);
 	}
 }

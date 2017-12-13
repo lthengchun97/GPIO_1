@@ -54,3 +54,8 @@ void enableI2C2(void){
 	Rcc->APB1RSTR &= ~(1<22);
 	Rcc->APB1ENR |= (1<<22);
 }
+
+void enableUART1(void){
+	Rcc->APB2RSTR &= ~(1<<4);
+	Rcc->APB2ENR |= (1<<4);
+}
