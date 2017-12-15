@@ -48,6 +48,7 @@
 #include <stdio.h>
 #include "DbgMcu.h"
 #include "extiReg.h"
+#include <string.h>
 #include "stm32f4xx_hal.h"
 
 /* USER CODE BEGIN Includes */
@@ -118,10 +119,10 @@ int main(void)
   //nvicSetPriority(80,4);
   //getRandomNumberByInterrupt();
   enableGpioA();
-  //enableGpioG();
-  //gpioConfig(GpioA,blueButtonPin, GPIO_MODE_IN, 0, GPIO_NO_PULL, 0);
-  //gpioConfig(GpioG,redLedPin, GPIO_MODE_OUT, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_HI_SPEED);
-  //gpioConfig(GpioG,greenLedPin, GPIO_MODE_OUT, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_HI_SPEED);
+  enableGpioG();
+  gpioConfig(GpioA,blueButtonPin, GPIO_MODE_IN, 0, GPIO_NO_PULL, 0);
+  gpioConfig(GpioG,redLedPin, GPIO_MODE_OUT, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_HI_SPEED);
+  gpioConfig(GpioG,greenLedPin, GPIO_MODE_OUT, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_HI_SPEED);
   //gpioConfig(GpioA,8, GPIO_MODE_AF, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_VHI_SPEED);
   //gpioConfigAltFunction(GpioA,8,AF8);
   //rccSelectMcolSrc(MCO_HSE_SRC);
@@ -171,21 +172,54 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  char *Data = (char*)malloc(sizeof(char) * 100);
   while (1)
   {
-	  USARTSendCharDataOut("H");
-	  USARTSendCharDataOut("E");
-	  USARTSendCharDataOut("L");
-	  USARTSendCharDataOut("L");
-	  USARTSendCharDataOut("O");
-	  USARTSendCharDataOut("!");
-	  USARTSendCharDataOut("W");
-	  USARTSendCharDataOut("o");
-	  USARTSendCharDataOut("R");
-	  USARTSendCharDataOut("L");
-	  USARTSendCharDataOut("d");
-	  USARTSendCharDataOut("\n");
-	  HAL_Delay(1000);
+	  int temp;
+	  stringReceive(&Data);
+
+	  if(strcmp("turn on", &Data) == 1){
+		  gpioWrite(GpioG,greenLedPin,1);
+	  	 	  	  }
+	  else if(strcmp("turn off", &Data) == 1){
+		  gpioWrite(GpioG,greenLedPin,0);
+	  	 	  	  }
+	  else if(strcmp("blinky", &Data) == 1){
+		  	  	  	  	HAL_Delay(250);
+		  		  	  	//gpioWrite(GpioG,redLedPin,1);
+		  		  	  	//HAL_Delay(250);
+		  		  	  	//gpioWrite(GpioG,redLedPin,0);
+		  		  	  	break;
+	  	 	  }
+	  else{
+		  temp = 0;
+	  }
+
+	// switch(temp){
+	 //case 1 :	gpioWrite(GpioG,redLedPin,1);
+	 //	 	 	break;
+	// case 2 : 	gpioWrite(GpioG,redLedPin,0);
+	// 	 	 	break;
+	 //case 3 : 	HAL_Delay(250);
+		//  	  	gpioWrite(GpioG,redLedPin,1);
+		  //	  	HAL_Delay(250);
+		  	//  	gpioWrite(GpioG,redLedPin,0);
+		  	  //	break;
+
+	 //}
+	  //USARTSendCharDataOut("H");
+	  //USARTSendCharDataOut("E");
+	  //USARTSendCharDataOut("L");
+	  //USARTSendCharDataOut("L");
+	  //USARTSendCharDataOut("O");
+	  //USARTSendCharDataOut("!");
+	  //USARTSendCharDataOut("W");
+	  //USARTSendCharDataOut("o");
+	  //USARTSendCharDataOut("R");
+	  //USARTSendCharDataOut("L");
+	  //USARTSendCharDataOut("d");
+	  //USARTSendCharDataOut("\n");
+	  //HAL_Delay(1000);
 
 	  //volatile int blueButtonState;
 	  //gpioWrite(GpioG,redLedPin,1);

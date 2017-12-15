@@ -40,11 +40,13 @@ struct UsartReg {
 #define	RE_EN				(1<<2)
 #define	SR_TC				(1<<6)
 #define	SR_TXE				(1<<7)
-
+#define	SR_RXNE				(1<<5)
 void initUsartTransmitter();
 void initUsartReceiver();
 void writeData(uint32_t data);
 void initUsart();
 void USARTSendCharDataOut(char* data);
+uint8_t ReceiveData();
+void stringReceive(char *Data);
 
 #endif /* USART_H_ */

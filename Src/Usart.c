@@ -64,8 +64,21 @@ void initUsart(){
 
 void USARTSendCharDataOut(char* data){
 	while(!(usart1->SR&(SR_TXE))){
-
 	}
 	usart1->DR=*data;
 
+}
+
+uint8_t ReceiveData(){
+	while(!(usart1->SR & SR_RXNE));		// check either the RXNE bit is clear and return the key in data
+	return (uint8_t)usart1->DR;
+}
+
+void stringReceive(char *Data){
+	*(Data) = ReceiveData();			// the data keeps store into the Data string
+	while(*(Data)!=0xA){				// If it doens't detect the ENTER the string will keeps detect, and if it is ENTER,
+		Data++;							// the string will be cleared and start detecting new string.
+		*(Data) = ReceiveData();
+	}
+	*Data=0;
 }
