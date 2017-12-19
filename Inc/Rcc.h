@@ -8,7 +8,8 @@
 #ifndef RCC_H_
 #define RCC_H_
 
-#include"stdint.h"
+#include "stdint.h"
+#include "Common.h"
 
 #define RCC_BASE_ADDR		0x40023800
 #define RCC_AHB1RST_OFF		0x10
@@ -61,6 +62,7 @@ void enableTimer8(void);
 void enableI2C2(void);
 void enableI2C1(void);
 void enableUART1(void);
+void enableDMA(int dmaNumber);
 
 #define	MCO_LSE_SRC		1
 #define	MCO_HSE_SRC		2
@@ -71,6 +73,10 @@ void enableUART1(void);
 #define	MCO_DIV_BY_3	5
 #define	MCO_DIV_BY_4	6
 #define	MCO_DIV_BY_5	7
+
+//DMA
+#define	DMA1_DEV		0
+#define	DMA2_DEV		1
 
 #define	rccSelectMcolSrc(x)				\
 		do{								\

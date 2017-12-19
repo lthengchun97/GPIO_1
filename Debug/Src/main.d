@@ -1,6 +1,7 @@
 Src/main.o: ../Src/main.c C:/Student/ThengChun/STM32/RNG_2/Inc/main.h \
  ../Src/Gpio.h ../Src/Rng.h C:/Student/ThengChun/STM32/RNG_2/Inc/Rcc.h \
- ../Src/Nvic.h C:/Student/ThengChun/STM32/RNG_2/Inc/i2c.h \
+ C:/Student/ThengChun/STM32/RNG_2/Inc/Common.h ../Src/Nvic.h \
+ C:/Student/ThengChun/STM32/RNG_2/Inc/i2c.h \
  C:/Student/ThengChun/STM32/RNG_2/Inc/Flash.h \
  C:/Student/ThengChun/STM32/RNG_2/Inc/Rcc.h \
  C:/Student/ThengChun/STM32/RNG_2/Inc/Timer.h \
@@ -30,7 +31,8 @@ Src/main.o: ../Src/main.c C:/Student/ThengChun/STM32/RNG_2/Inc/main.h \
  C:/Student/ThengChun/STM32/RNG_2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h \
  C:/Student/ThengChun/STM32/RNG_2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h \
  C:/Student/ThengChun/STM32/RNG_2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h \
- C:/Student/ThengChun/STM32/RNG_2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
+ C:/Student/ThengChun/STM32/RNG_2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
+ C:/Student/ThengChun/STM32/RNG_2/Inc/Dma.h
 
 C:/Student/ThengChun/STM32/RNG_2/Inc/main.h:
 
@@ -39,6 +41,8 @@ C:/Student/ThengChun/STM32/RNG_2/Inc/main.h:
 ../Src/Rng.h:
 
 C:/Student/ThengChun/STM32/RNG_2/Inc/Rcc.h:
+
+C:/Student/ThengChun/STM32/RNG_2/Inc/Common.h:
 
 ../Src/Nvic.h:
 
@@ -105,3 +109,5 @@ C:/Student/ThengChun/STM32/RNG_2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_
 C:/Student/ThengChun/STM32/RNG_2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h:
 
 C:/Student/ThengChun/STM32/RNG_2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h:
+
+C:/Student/ThengChun/STM32/RNG_2/Inc/Dma.h:

@@ -50,6 +50,7 @@
 #include "extiReg.h"
 #include <string.h>
 #include "stm32f4xx_hal.h"
+#include "Dma.h"
 
 /* USER CODE BEGIN Includes */
 #define greenLedPin		13
@@ -79,7 +80,7 @@ extern void initialise_monitor_handles(void);
 /* USER CODE END 0 */
 
 int main(void)
-{
+ {
 
   /* USER CODE BEGIN 1 */
 	initialise_monitor_handles();
@@ -118,19 +119,23 @@ int main(void)
   //nvicEnableIrq(80);
   //nvicSetPriority(80,4);
   //getRandomNumberByInterrupt();
+  //gpioConfig(GpioA,8, GPIO_MODE_AF, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_VHI_SPEED);
+    //gpioConfigAltFunction(GpioA,8,AF8);
+    //rccSelectMcolSrc(MCO_HSE_SRC);
+    //rccSetMcolPrescaler(MCO_DIV_BY_4);
+    //initTimer8();
+    //haltTimer8WhenDebugging();
+    //TestI2C();
+
   enableGpioA();
   enableGpioG();
   gpioConfig(GpioA,blueButtonPin, GPIO_MODE_IN, 0, GPIO_NO_PULL, 0);
   gpioConfig(GpioG,redLedPin, GPIO_MODE_OUT, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_HI_SPEED);
   gpioConfig(GpioG,greenLedPin, GPIO_MODE_OUT, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_HI_SPEED);
-  //gpioConfig(GpioA,8, GPIO_MODE_AF, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_VHI_SPEED);
-  //gpioConfigAltFunction(GpioA,8,AF8);
-  //rccSelectMcolSrc(MCO_HSE_SRC);
-  //rccSetMcolPrescaler(MCO_DIV_BY_4);
-  //initTimer8();
-  //haltTimer8WhenDebugging();
-  //TestI2C();
 
+
+  gpioConfig(GpioA,8,GPIO_MODE_AF,GPIO_PUSH_PULL,GPIO_NO_PULL,GPIO_VHI_SPEED);
+  gpioConfigAltFunction(GpioA,8,AF8);
   gpioConfig(GpioA,9, GPIO_MODE_AF, GPIO_PUSH_PULL, GPIO_PULL_UP, GPIO_VHI_SPEED);
   gpioConfigAltFunction(GpioA,9,AF7);
   gpioConfig(GpioA,10, GPIO_MODE_AF, GPIO_PUSH_PULL, GPIO_PULL_UP, GPIO_VHI_SPEED);
@@ -141,7 +146,8 @@ int main(void)
   initUsartTransmitter();
   initUsartReceiver();
 
-
+  enableDMA(DMA2_DEV);
+  initDmaForUsart1();
 
 
   //flashEnableProgramming(FLASH_BYTE_SIZE);
@@ -175,45 +181,44 @@ int main(void)
   char *Data = (char*)malloc(sizeof(char) * 100);
   while (1)
   {
-	  int temp;
-	  stringReceive(&Data);
+	  //int temp;
+	  //stringReceive(&Data);
 
-	  if(strcmp("turn on", &Data) == 1){
-		  gpioWrite(GpioG,greenLedPin,1);
-	  	 	  	  }
-	  else if(strcmp("turn off", &Data) == 1){
-		  gpioWrite(GpioG,greenLedPin,0);
-	  	 	  	  }
-	  else if(strcmp("blinky", &Data) == 1){
-		  	  	  	  	HAL_Delay(250);
-		  		  	  	//gpioWrite(GpioG,redLedPin,1);
-		  		  	  	//HAL_Delay(250);
-		  		  	  	//gpioWrite(GpioG,redLedPin,0);
-		  		  	  	break;
-	  	 	  }
-	  else{
-		  temp = 0;
+	//  if(strcmp("turn on", &Data) == 0){
+	//	  temp = 1;
+	  	 	  	 // }
+	//  else if(strcmp("turn off", &Data) == 0){
+	//	  temp = 2;
+	//  	 	  	  }
+	//  else if(strcmp("blinky", &Data) == 0){
+	//	  	  	  	  	temp = 3;
+	//	  		  	  	break;
+	//  	 	  }
+	//  else{
+		/*  temp = 0;
 	  }
 
-	// switch(temp){
-	 //case 1 :	gpioWrite(GpioG,redLedPin,1);
-	 //	 	 	break;
-	// case 2 : 	gpioWrite(GpioG,redLedPin,0);
-	// 	 	 	break;
-	 //case 3 : 	HAL_Delay(250);
-		//  	  	gpioWrite(GpioG,redLedPin,1);
-		  //	  	HAL_Delay(250);
-		  	//  	gpioWrite(GpioG,redLedPin,0);
-		  	  //	break;
+	 switch(temp){
+	 case 1 :	gpioWrite(GpioG,greenLedPin,1);
+	 	 	 	break;
+	 case 2 : 	gpioWrite(GpioG,greenLedPin,0);
+	 	 	 	break;
+	 case 3 : 	HAL_Delay(250);
+		  	  	gpioWrite(GpioG,greenLedPin,1);
+		  	  	HAL_Delay(250);
+		  	  	gpioWrite(GpioG,greenLedPin,0);
+		  	  	break;
 
-	 //}
+	 }
+	 */
+
 	  //USARTSendCharDataOut("H");
 	  //USARTSendCharDataOut("E");
 	  //USARTSendCharDataOut("L");
 	  //USARTSendCharDataOut("L");
 	  //USARTSendCharDataOut("O");
 	  //USARTSendCharDataOut("!");
-	  //USARTSendCharDataOut("W");
+	  USARTSendCharDataOut("W");
 	  //USARTSendCharDataOut("o");
 	  //USARTSendCharDataOut("R");
 	  //USARTSendCharDataOut("L");

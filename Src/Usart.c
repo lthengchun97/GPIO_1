@@ -7,7 +7,15 @@
 
 #include "Usart.h"
 
-
+/*
+ * 		STM32F429ZI		|	USART
+ * 		NAME	PIN		|	NAME
+ * 		----------------+--------
+ * 		 TX		PA9		|	RX
+ * 		 RX		PA10	|	TX
+ * 		 GND	GND		|	GND
+ * 		-------------------------
+ */
 
 // Transmitter
 //1. Enable the USART by writing the UE bit in USART_CR1 register to 1.
@@ -59,7 +67,7 @@ void initUsart(){
 		usart1->CR1 |= OddParity;			// set the parity selection as odd parity
 		usart1->BRR = 13;					// div_fraction as 8
 		usart1->BRR |= (0x30<<4);			// div_mantissa as 48
-
+		usart1->CR3 |= UART_DMA_TX_EN;
 }
 
 void USARTSendCharDataOut(char* data){

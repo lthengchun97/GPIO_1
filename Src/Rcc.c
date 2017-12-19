@@ -59,3 +59,12 @@ void enableUART1(void){
 	Rcc->APB2RSTR &= ~(1<<4);
 	Rcc->APB2ENR |= (1<<4);
 }
+
+
+/*
+ * Enable and clock DMA
+ */
+void enableDMA(int dmaNumber){
+	Rcc->AHB1RSTR &= ~(1<<(21 + dmaNumber));
+	Rcc->AHB1ENR |= (1<<(21+dmaNumber));
+}

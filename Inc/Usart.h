@@ -41,6 +41,15 @@ struct UsartReg {
 #define	SR_TC				(1<<6)
 #define	SR_TXE				(1<<7)
 #define	SR_RXNE				(1<<5)
+
+#define	UART_DMA_TX_EN			(1<<7)
+#define	UART_DMA_RX_END			(1<<6)
+#define usartIsTxIEmpty()			(usart1->SR & SR_TXE)
+#define usartIsReceiveData()		(usart1->SR & SR_RXNE)
+#define	usartEnable
+
+
+
 void initUsartTransmitter();
 void initUsartReceiver();
 void writeData(uint32_t data);
