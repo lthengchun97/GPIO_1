@@ -62,6 +62,7 @@ void enableTimer8(void);
 void enableI2C2(void);
 void enableI2C1(void);
 void enableUART1(void);
+void enableGpioC(void);
 void enableDMA(int dmaNumber);
 
 #define	MCO_LSE_SRC		1

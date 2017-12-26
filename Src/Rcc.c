@@ -31,6 +31,13 @@ void enableGpioG(void){
 	*rccAhb1En |= 1 << 6;
 }
 
+void enableGpioC(void){
+	//unreset GPIOG
+	*rccAhb1Rst &= ~(1 << 2);
+	//Start clock of GPIOG
+	*rccAhb1En |= 1 << 2;
+}
+
 void enableRng(void){
 	Rcc->AHB2RSTR &= ~(1<<6);
 	Rcc->AHB2ENR |= (1<<6);

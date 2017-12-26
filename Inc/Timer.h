@@ -45,6 +45,33 @@ struct TimerReg {
 
 }while(0)
 */
+// Configure CCER
+#define		CC1_HIGH			(0<<1)
+#define		CC1_LOW				(1<<1)
+#define		CC1_OUTPUT_ENABLE	(1)
+#define		CC3_ENABLE			(1<<8)
+#define		CC4_ENABLE			(1<<12)
+#define		CC1_ENABLE			(1)
+
+
+// Configure CR2
+#define		NO_CC_PRELOAD_CONTROL	0
+
+// Configure BDTR
+#define		MOE_EN				(1<<15)
+
+// Configure CCMR1
+#define		CCMR1_CC_OUT		(0)
+#define		ACTIVE_HIGH			(5<<4)
+#define		ACTIVE_LOW			(4<<4)
+#define		OCP1E_EN			(1<<3)
+
+#define		TOGGLE_WAVE			(3<<4)
+
 void Timer8Delay();
 void initTimer8();
+void forceOutCompareChannel1High();
+void forceOutCompareChannel1Low();
+void initOutputCompare();
+void toggleOutCompareChannel1WithForce();
 #endif /* TIMER_H_ */

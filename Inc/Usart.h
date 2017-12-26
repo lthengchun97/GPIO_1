@@ -57,5 +57,6 @@ void initUsart();
 void USARTSendCharDataOut(char* data);
 uint8_t ReceiveData();
 void stringReceive(char *Data);
+void serialPrint(char *format,...);
 
 #endif /* USART_H_ */

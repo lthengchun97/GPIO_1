@@ -6,6 +6,7 @@
  */
 
 #include <stdint.h>
+#include "Timer.h"
 #ifndef DMA_H_
 #define DMA_H_
 
@@ -118,7 +119,8 @@ struct DmaReg {
 
 // dma1->S[4].M0AR = 0;
 
-void initDmaForUsart1();
+void initDmaForUsart1(char* data);
 int dmaStreamCheckFlag(DmaReg *dma,int streamNum,int flag);
-
+void serialPrint(char *format,...);
+void sendBitPattern(uint8_t data);
 #endif /* DMA_H_ */

@@ -51,11 +51,15 @@
 #include <string.h>
 #include "stm32f4xx_hal.h"
 #include "Dma.h"
+#include "stm32f4xx.h"
 
 /* USER CODE BEGIN Includes */
 #define greenLedPin		13
 #define redLedPin		14
 #define blueButtonPin	0
+#define	ARR_ONE_PERIOD 125
+#define ARR_Low_Period 12
+uint16_t timeWaveform[] = {ARR_Low_Period,ARR_ONE_PERIOD,ARR_Low_Period,ARR_ONE_PERIOD,ARR_ONE_PERIOD+2};
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -129,6 +133,8 @@ int main(void)
 
   enableGpioA();
   enableGpioG();
+  enableGpioC();
+
   gpioConfig(GpioA,blueButtonPin, GPIO_MODE_IN, 0, GPIO_NO_PULL, 0);
   gpioConfig(GpioG,redLedPin, GPIO_MODE_OUT, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_HI_SPEED);
   gpioConfig(GpioG,greenLedPin, GPIO_MODE_OUT, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_HI_SPEED);
@@ -141,13 +147,21 @@ int main(void)
   gpioConfig(GpioA,10, GPIO_MODE_AF, GPIO_PUSH_PULL, GPIO_PULL_UP, GPIO_VHI_SPEED);
   gpioConfigAltFunction(GpioA,10,AF7);
 
+
+
   enableUART1();
   initUsart();
   initUsartTransmitter();
   initUsartReceiver();
 
   enableDMA(DMA2_DEV);
-  initDmaForUsart1();
+  serialPrint("test :%d %s\n",123,"Hello World");
+  initTimer8();
+  initOutputCompare();
+  sendBitPattern((char *)timeWaveform);
+  //forceOutCompareChannel1High();
+  //forceOutCompareChannel1Low();
+  //initDmaForUsart1("Hello World!\n");
 
 
   //flashEnableProgramming(FLASH_BYTE_SIZE);
@@ -181,6 +195,7 @@ int main(void)
   char *Data = (char*)malloc(sizeof(char) * 100);
   while (1)
   {
+	 // toggleOutCompareChannel1WithForce();
 	  //int temp;
 	  //stringReceive(&Data);
 
@@ -218,11 +233,12 @@ int main(void)
 	  //USARTSendCharDataOut("L");
 	  //USARTSendCharDataOut("O");
 	  //USARTSendCharDataOut("!");
-	  USARTSendCharDataOut("W");
+	  //USARTSendCharDataOut("W");
 	  //USARTSendCharDataOut("o");
 	  //USARTSendCharDataOut("R");
 	  //USARTSendCharDataOut("L");
 	  //USARTSendCharDataOut("d");
+
 	  //USARTSendCharDataOut("\n");
 	  //HAL_Delay(1000);
 

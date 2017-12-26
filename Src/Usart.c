@@ -6,6 +6,9 @@
  */
 
 #include "Usart.h"
+#include "stm32f4xx.h"
+#include <stdio.h>
+#include <stdarg.h>
 
 /*
  * 		STM32F429ZI		|	USART
@@ -89,4 +92,22 @@ void stringReceive(char *Data){
 		*(Data) = ReceiveData();
 	}
 	*Data=0;
+}
+
+void serialPrint(char *format,...){
+	va_list	args;
+	char* buffer;
+	int i,length;
+
+	va_start(args,format);
+
+	length = vsnprintf(buffer,0,format,args);
+	buffer = malloc(length + 1);
+	vsnprintf(buffer,length+1,format,args);
+
+	for(i = 0 ; i< length ; i++){
+		// Send the character byte-by-byte
+		USARTSendCharDataOut(&buffer[i]);
+	}
+	free(buffer);
 }
