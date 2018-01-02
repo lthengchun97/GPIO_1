@@ -52,6 +52,9 @@
 #include "stm32f4xx_hal.h"
 #include "Dma.h"
 #include "stm32f4xx.h"
+#include "ADC.h"
+#include <math.h>
+#include <stdint.h>
 
 /* USER CODE BEGIN Includes */
 #define greenLedPin		13
@@ -60,6 +63,7 @@
 #define	ARR_ONE_PERIOD 125
 #define ARR_Low_Period 12
 uint16_t timeWaveform[] = {ARR_Low_Period,ARR_ONE_PERIOD,ARR_Low_Period,ARR_ONE_PERIOD,ARR_ONE_PERIOD+2};
+int data[] = {1,5,8,9,10,11,15,18,19,20,14,25,27};
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -110,7 +114,7 @@ int main(void)
   MX_GPIO_Init();
 
   /* USER CODE BEGIN 2 */
-  //printf("Hello, world!\n");
+  printf("Hello, world!\n");
 
   //Enable I2C1 Event interrupt
   //nvicEnableIrq(31);
@@ -159,6 +163,11 @@ int main(void)
   initTimer8();
   initOutputCompare();
   sendBitPattern((char *)timeWaveform);
+  gpioConfig(GpioA,5, GPIO_MODE_ANA, GPIO_NO_PULL, GPIO_PULL_UP, GPIO_VHI_SPEED);
+  gpioConfig(GpioC,3, GPIO_MODE_ANA, GPIO_NO_PULL, GPIO_PULL_UP, GPIO_VHI_SPEED);
+  adcSetChannelSamplingSequence(adc1,data,13);
+  //initADC();
+  adcChannelSamplingTime(adc1,8,ADC_480_CYCLES);
   //forceOutCompareChannel1High();
   //forceOutCompareChannel1Low();
   //initDmaForUsart1("Hello World!\n");
@@ -195,6 +204,9 @@ int main(void)
   char *Data = (char*)malloc(sizeof(char) * 100);
   while (1)
   {
+	  int data = adc1->DR;
+	  float ans = (3.3* data)/4096;
+	  printf("%f \n",ans);
 	 // toggleOutCompareChannel1WithForce();
 	  //int temp;
 	  //stringReceive(&Data);

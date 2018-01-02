@@ -75,3 +75,8 @@ void enableDMA(int dmaNumber){
 	Rcc->AHB1RSTR &= ~(1<<(21 + dmaNumber));
 	Rcc->AHB1ENR |= (1<<(21+dmaNumber));
 }
+
+void enableADC1(void){
+	Rcc->APB2ENR |= (1<<8);
+	Rcc->APB2RSTR &= ~(1<<8);
+}

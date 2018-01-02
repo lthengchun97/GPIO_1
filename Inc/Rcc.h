@@ -64,6 +64,7 @@ void enableI2C1(void);
 void enableUART1(void);
 void enableGpioC(void);
 void enableDMA(int dmaNumber);
+void enableADC1(void);
 
 #define	MCO_LSE_SRC		1
 #define	MCO_HSE_SRC		2
