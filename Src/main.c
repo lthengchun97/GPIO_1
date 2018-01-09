@@ -53,6 +53,7 @@
 #include "Dma.h"
 #include "stm32f4xx.h"
 #include "ADC.h"
+#include "IWDG.h"
 #include <math.h>
 #include <stdint.h>
 
@@ -76,6 +77,8 @@ int data[] = {1,5,8,9,10,11,15,18,19,20,14,25,27};
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+void printCauseOfReset(void);
+void wait500ms(void);
 
 /* USER CODE BEGIN PFP */
 extern void initialise_monitor_handles(void);
@@ -168,6 +171,40 @@ int main(void)
   adcSetChannelSamplingSequence(adc1,data,13);
   //initADC();
   adcChannelSamplingTime(adc1,8,ADC_480_CYCLES);
+
+
+
+  // IWDG
+  printCauseOfReset();
+  rccClearAllResetFlag();
+  //initIWDG();
+  //RVU_WHILE();
+  //PVU_WHILE();
+  //IWDG->KR = RESET_WD;
+
+  // WWDG
+  //volatile int i=0;
+  enableWWDG();
+  //disableWakeUpInterrupt();
+  //while(i++<20){
+	  //gpioWrite(GpioG,greenLedPin,1);
+	  //HAL_Delay(35);
+	  //gpioWrite(GpioG,greenLedPin,0);
+	//  HAL_Delay(35);
+  //}
+  //enableWakeUpInterrupt();
+  //initWWDG(COUNTER_2,30);
+  //wwdgSetUpPrescale(COUNTER_2);
+  //wwdgSetUpWindowValue(30);
+  //enableWindowWDG(63);
+
+  	 // Enable WWDG INTERRUPT
+  nvicEnableIrq(0);
+  //nvicSetPriority(0,4);
+
+
+
+
   //forceOutCompareChannel1High();
   //forceOutCompareChannel1Low();
   //initDmaForUsart1("Hello World!\n");
@@ -204,9 +241,19 @@ int main(void)
   char *Data = (char*)malloc(sizeof(char) * 100);
   while (1)
   {
-	  int data = adc1->DR;
-	  float ans = (3.3* data)/4096;
-	  printf("%f \n",ans);
+	  //HAL_Delay(7);
+	  //resetWindowWDG(63);
+	  //int data = adc1->DR;
+	  //float ans = (3.3* data)/4096;
+	  //printf("%f \n",ans);
+
+
+
+	  gpioWrite(GpioG,greenLedPin,1);
+	  wait500ms();
+	  gpioWrite(GpioG,greenLedPin,0);
+	  wait500ms();
+	  //IWDG->KR = RESET_WD;
 	 // toggleOutCompareChannel1WithForce();
 	  //int temp;
 	  //stringReceive(&Data);
@@ -405,7 +452,39 @@ void EXTI0_IRQHandler(void){
 	exTiPRClr(blueButtonPin);
 	static volatile int temp=0;
 	temp++;
+}
 
+void printCauseOfReset(void){
+	printf("Cause of reset:\n");
+	if(Rcc->CSR & RCC_LPWRRSTF)
+		printf("Low power reset \n");
+	if(Rcc->CSR & RCC_WWDGRSTF)
+		printf("Window watch dog reset \n");
+	if(Rcc->CSR & RCC_IWDGRSTF)
+		printf("Independent watch dog reset \n");
+	if(Rcc->CSR & RCC_SFTRSTF)
+		printf("Software reset \n");
+	if(Rcc->CSR & RCC_PORRSTF)
+		printf("Power-on reset \n");
+	if(Rcc->CSR & RCC_PINRSTF)
+		printf("Pin reset \n");
+	if(Rcc->CSR & RCC_BORRSTF)
+		printf("BOR reset \n");
+}
+
+void wait500ms(void){
+	  volatile int i = 0;
+	  initWWDG(COUNTER_2,60);
+	  enableWindowWDG(60);
+	  disableWakeUpInterrupt();
+	  while(i++<50){
+		  while(!(WWDG->SR&WWDG_EWI_FLAG));
+		  enableWindowWDG(60);
+		  disableWakeUpInterrupt();
+	    }
+  }
+
+void WWDG_IRQHandler(void){
 
 }
 /* USER CODE END 4 */

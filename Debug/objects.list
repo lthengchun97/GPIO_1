@@ -16,6 +16,7 @@
 "Src/Dma.o"
 "Src/Flash.o"
 "Src/Gpio.o"
+"Src/IWDG.o"
 "Src/Rcc.o"
 "Src/Rng.o"
 "Src/Timer.o"

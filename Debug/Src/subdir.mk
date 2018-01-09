@@ -8,6 +8,7 @@ C_SRCS += \
 ../Src/Dma.c \
 ../Src/Flash.c \
 ../Src/Gpio.c \
+../Src/IWDG.c \
 ../Src/Rcc.c \
 ../Src/Rng.c \
 ../Src/Timer.c \
@@ -23,6 +24,7 @@ OBJS += \
 ./Src/Dma.o \
 ./Src/Flash.o \
 ./Src/Gpio.o \
+./Src/IWDG.o \
 ./Src/Rcc.o \
 ./Src/Rng.o \
 ./Src/Timer.o \
@@ -38,6 +40,7 @@ C_DEPS += \
 ./Src/Dma.d \
 ./Src/Flash.d \
 ./Src/Gpio.d \
+./Src/IWDG.d \
 ./Src/Rcc.d \
 ./Src/Rng.d \
 ./Src/Timer.d \

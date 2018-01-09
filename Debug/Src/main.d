@@ -34,7 +34,8 @@ Src/main.o: ../Src/main.c C:/Student/ThengChun/STM32/RNG_2/Inc/main.h \
  C:/Student/ThengChun/STM32/RNG_2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  C:/Student/ThengChun/STM32/RNG_2/Inc/Dma.h \
  C:/Student/ThengChun/STM32/RNG_2/Inc/Timer.h \
- C:/Student/ThengChun/STM32/RNG_2/Inc/ADC.h
+ C:/Student/ThengChun/STM32/RNG_2/Inc/ADC.h \
+ C:/Student/ThengChun/STM32/RNG_2/Inc/IWDG.h
 
 C:/Student/ThengChun/STM32/RNG_2/Inc/main.h:
 
@@ -117,3 +118,5 @@ C:/Student/ThengChun/STM32/RNG_2/Inc/Dma.h:
 C:/Student/ThengChun/STM32/RNG_2/Inc/Timer.h:
 
 C:/Student/ThengChun/STM32/RNG_2/Inc/ADC.h:
+
+C:/Student/ThengChun/STM32/RNG_2/Inc/IWDG.h:

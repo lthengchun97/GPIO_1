@@ -80,3 +80,12 @@ void enableADC1(void){
 	Rcc->APB2ENR |= (1<<8);
 	Rcc->APB2RSTR &= ~(1<<8);
 }
+
+void enableWWDG(void){
+	Rcc->APB1RSTR &= ~(1<<11);
+	Rcc->APB1ENR |= (1<<11);
+}
+
+void enableWWDGLP(void){
+	Rcc->APB1LPENR |= (1<11);
+}

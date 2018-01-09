@@ -65,6 +65,8 @@ void enableUART1(void);
 void enableGpioC(void);
 void enableDMA(int dmaNumber);
 void enableADC1(void);
+void enableWWDGLP(void);
+void enableWWDG(void);
 
 #define	MCO_LSE_SRC		1
 #define	MCO_HSE_SRC		2
@@ -91,5 +93,17 @@ void enableADC1(void);
 			Rcc->CFGR &= ~(7<<24);		\
 			Rcc->CFGR |= (x)<<24;		\
 		}while (0)
+
+// Control & Status register (CSR)
+#define	RCC_LPWRRSTF 	(1<<31)
+#define	RCC_WWDGRSTF	(1<<30)
+#define	RCC_IWDGRSTF	(1<<29)
+#define	RCC_SFTRSTF		(1<<28)
+#define	RCC_PORRSTF		(1<<27)
+#define	RCC_PINRSTF		(1<<26)
+#define	RCC_BORRSTF		(1<<25)
+#define	RCC_RMVF		(1<<24)
+
+#define	rccClearAllResetFlag()			(Rcc->CSR |= RCC_RMVF)
 
 #endif /* RCC_H_ */
